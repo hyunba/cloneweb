@@ -1,0 +1,33 @@
+<!-- 바닐라 JS와 React.JS 비교-->
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script>
+        const root = document.getElementById("root");
+        const h3 = React.createElement(
+            "h3", 
+            {
+                id : "title",
+                onMouseEnter: () => console.log("mouse enter")
+            }, 
+            "Hi"
+            ); 
+        const btn = React.createElement(
+            "button", 
+            { 
+                onClick: () => console.log("click"),
+                style: {
+                    backgroundColor: "blue"
+                }
+            }, 
+            "Click me"
+            );
+        const container = React.createElement("div", null, [h3, btn]); //span과 button을 둘 다 render 할 수 있게 div 생성
+
+        ReactDOM.render(container, root);
+    </script>
+</html>
