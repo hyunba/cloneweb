@@ -18,6 +18,7 @@ const Loader = styled.div`
 `;
 const SearchTitle = styled.h1`
   padding: 0px 60px;
+  color: gray;
 `;
 
 const BoxContainer = styled.div`
@@ -34,7 +35,6 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   margin-bottom: 20px;
   border-radius: 5px;
   position: relative;
-  box-shadow: 0px 2px 15px 0px rgba(255, 255, 255, 0.22);
   cursor: pointer;
 `;
 
@@ -56,15 +56,15 @@ const MediaType = styled.div`
   }
 `;
 const Info = styled(motion.div)`
-  padding: 20px;
   background-color: ${(props) => props.theme.black.darker};
   opacity: 0;
   position: absolute;
   width: 100%;
   bottom: 0;
   h4 {
+    color: gray;
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
   }
 `;
 
@@ -99,7 +99,7 @@ const boxVariants = {
     zIndex: 99,
     transition: {
       delay: 0.5,
-      duration: 0.3,
+      duration: 0.1,
       type: 'tween',
     },
   },
@@ -109,7 +109,7 @@ const infoVariants = {
     opacity: 1,
     transition: {
       delay: 0.5,
-      duration: 0.3,
+      duration: 0.1,
       type: 'tween',
     },
   },
@@ -208,7 +208,7 @@ const Search = () => {
                     <Info variants={infoVariants}>
                       <h4>{search.name}</h4>
                     </Info>
-                    <h1>{'찾으시는 결과가 없습니다.'}</h1>
+                    {/* <h1>{'찾으시는 결과가 없습니다.'}</h1> */}
                   </Box>
                 )}
               </AnimatePresence>

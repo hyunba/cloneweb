@@ -138,7 +138,7 @@ const boxVariants = {
     hover: {
         zIndex: 99,
         scale: 1.3,
-        y: -40,
+        y: -30,
         transition: {
             delay: 0.2,
             duration: 0.1,            
