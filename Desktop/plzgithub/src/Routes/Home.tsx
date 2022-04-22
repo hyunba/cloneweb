@@ -7,7 +7,7 @@ import { useState } from "react";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
-    background: black;
+    background-color: black;
 `;
 
 const Loader = styled.div`
