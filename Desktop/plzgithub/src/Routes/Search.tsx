@@ -79,15 +79,26 @@ const Overlay = styled(motion.div)`
 
 const BigMovie = styled(motion.div)`
   position: absolute;
-  width: 50vw;
+  width: 40vw;
   height: 80vh;
-  background-color: ${(props) => props.theme.black.darker};
-  box-shadow: 0px 2px 15px 0px rgba(255, 255, 255, 0.22);
+  backgroundColor: whitesmoke;
   left: 0;
   right: 0;
   margin: 0 auto;
-  overflow-y: scroll;
+  background-color: ${props => props.theme.black.lighter};
+  border-radius: 15px;
+  overflow:hidden;
 `;
+// position: absolute;
+//     width: 40vw;
+//     height: 80vh;
+//     backgroundColor: whitesmoke;
+//     left: 0;
+//     right: 0;
+//     margin: 0 auto;
+//     background-color: ${props => props.theme.black.lighter};
+//     border-radius: 15px;
+//     overflow:hidden;
 
 const boxVariants = {
   normal: {
@@ -122,13 +133,14 @@ const Search = () => {
   const navigate = useNavigate();
   const location = useLocation() as SearchProps;
   const keyword = new URLSearchParams(location.search).get('keyword');
-  const movieMatch = useMatch('/search/movies/:movieId');
-  const tvMatch = useMatch(`/search/tv/:tvId`);
+  // const movieMatch = useMatch('/search/movies/:movieId');
+  const movieMatch = useMatch("/search/movies/:id");
+  const tvMatch = useMatch(`/search/tv/:id`);
   const { scrollY } = useViewportScroll();
   const { data, isLoading } = useQuery<ISearchResult>(['search', keyword], () =>
     searchAll(keyword)
   );
-  const onClickBox = (mediaType: string, searchId: number) => {
+  const onBoxClicked = (mediaType: string, searchId: number) => {
     if (mediaType === 'movie') {
       navigate(`/search/movies/${searchId}`);
     } else if (mediaType === 'tv') {
@@ -144,6 +156,7 @@ const Search = () => {
 
   return (
     <Wrapper>
+      
       <>
         <title>{`Search | ${keyword}`}</title>
       </>
@@ -162,7 +175,7 @@ const Search = () => {
                     variants={boxVariants}
                     key={search.id}
                     onClick={() => {
-                      onClickBox(search.media_type, search.id);
+                      onBoxClicked(search.media_type, search.id);
                     }}
                     bgPhoto={
                       search.backdrop_path
@@ -193,7 +206,7 @@ const Search = () => {
                     variants={boxVariants}
                     key={search.id}
                     onClick={() => {
-                      onClickBox(search.media_type, search.id);
+                      onBoxClicked(search.media_type, search.id);
                     }}
                     bgPhoto={
                       search.backdrop_path
@@ -216,21 +229,17 @@ const Search = () => {
           </BoxContainer>
           <AnimatePresence>
             {movieMatch ? (
+              <>
               <Overlay
                 onClick={onOverlayClick}
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-              >
+              />
                 <BigMovie
-                  style={{
-                    top: scrollY.get() + 100,
-                    bottom: scrollY.get() + 100,
-                  }}
-                  layoutId={movieMatch.params.movieId}
-                >
-                  
-                </BigMovie>
-              </Overlay>
+                  style={{top: scrollY.get() + 50}}
+                  layoutId={movieMatch.params.id}
+                />
+              </>
             ) : null}
             {tvMatch ? (
               <Overlay
@@ -243,13 +252,15 @@ const Search = () => {
                     top: scrollY.get() + 100,
                     bottom: scrollY.get() + 100,
                   }}
-                  layoutId={tvMatch.params.tvId}
+                  layoutId={tvMatch.params.id}
                 >
                   
                 </BigMovie>
               </Overlay>
             ) : null}
+            
           </AnimatePresence>
+          
         </>
       )}
     </Wrapper>
