@@ -182,7 +182,7 @@ function Home() {
     };
     const onOverlayClick = () => history(`/`);
     const clickedMovie = movieMatch?.params.id && data?.results.find(movie => movie.id+"" === movieMatch.params.id);
-   
+   console.log(clickedMovie)
     return (
         <Wrapper>
             {isLoading ? (

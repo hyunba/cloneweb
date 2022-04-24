@@ -99,6 +99,27 @@ const BigMovie = styled(motion.div)`
 //     background-color: ${props => props.theme.black.lighter};
 //     border-radius: 15px;
 //     overflow:hidden;
+const MovieCover = styled.img`
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    height: 400px;
+    
+`;
+const MovieTitle = styled.h3`
+    color: gray;
+    padding:10px;
+    position: relative;
+    top:-60px;
+    font-size:20px;
+`;
+const MovieCoverInfo = styled.p`
+    padding: 20px;
+    position: relative;
+    top: -80px;
+    color: white;
+`;
+
 
 const boxVariants = {
   normal: {
@@ -154,6 +175,9 @@ const Search = () => {
     navigate(-1);
   };
 
+  const clickedMovie = movieMatch?.params.id && data?.results.find(movie => movie.id+"" === movieMatch.params.id);
+  const clickedTv = tvMatch?.params.id && data?.results.find(tv => tv.id+"" === tvMatch.params.id);
+  console.log(clickedMovie)
   return (
     <Wrapper>
       
@@ -234,11 +258,18 @@ const Search = () => {
                 onClick={onOverlayClick}
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-              />
+              >
                 <BigMovie
                   style={{top: scrollY.get() + 50}}
                   layoutId={movieMatch.params.id}
-                />
+                >
+                  {clickedMovie && <>
+                    <MovieCover style={{backgroundImage:`linear-gradient(to top, black, transparent), url(${makeImagePath(clickedMovie.backdrop_path,"w500")})`,}}/>
+                    <MovieTitle>{clickedMovie.title}</MovieTitle>
+                    <MovieCoverInfo>{clickedMovie.overview}</MovieCoverInfo>
+                  </>}
+                </BigMovie>
+              </Overlay>
               </>
             ) : null}
             {tvMatch ? (
@@ -248,13 +279,14 @@ const Search = () => {
                 animate={{ opacity: 1 }}
               >
                 <BigMovie
-                  style={{
-                    top: scrollY.get() + 100,
-                    bottom: scrollY.get() + 100,
-                  }}
+                  style={{top: scrollY.get() - 150}}
                   layoutId={tvMatch.params.id}
                 >
-                  
+                  {clickedTv && <>
+                    <MovieCover style={{backgroundImage:`linear-gradient(to top, black, transparent), url(${makeImagePath(clickedTv.backdrop_path,"w500")})`,}}/>
+                    <MovieTitle>{clickedTv.title}</MovieTitle>
+                    <MovieCoverInfo>{clickedTv.overview}</MovieCoverInfo>
+                  </>}
                 </BigMovie>
               </Overlay>
             ) : null}
