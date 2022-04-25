@@ -1,6 +1,7 @@
 const API_KEY = "659fccb8edf938abc045369e7c13761a";
 const BASE_PATH = "https://api.themoviedb.org/3"; 
 
+
 interface IMovie {
     id: number;
     backdrop_path: string;
@@ -10,6 +11,34 @@ interface IMovie {
     name: string;
     media_type: string;
 }
+
+interface IGenres {
+    id: number;
+    name: string;
+  }
+  interface ICompanies {
+    id: number;
+    name: string;
+    logo_path: string;
+  }
+
+export interface IGetMovieDetail {
+    adult: boolean;
+    backdrop_path: string;
+    genres: IGenres[];
+    homepage: string;
+    id: number;
+    production_companies: ICompanies[];
+    title: string;
+    vote_average: number;
+    overview: string;
+    poster_path?: string;
+    name: string;
+    runtime: number;
+    number_of_seasons: number;
+    results: IMovie[];
+  }
+  
 
 export interface ISearchResult {
     page: number;

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useQuery } from "react-query";
-import { getMovies, GetMoviesResult } from "../api";
+import { getMovies, GetMoviesResult, IGetMovieDetail } from "../api";
 import { makeImagePath } from "./utils";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useState } from "react";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
+import noPoster from '../logo.svg';
 
 const Wrapper = styled.div`
     background-color: black;
@@ -26,7 +27,7 @@ const Banner = styled.div<{bgPhoto:string}>`
     background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.3)), url(${(props) =>props.bgPhoto});
     background-size: cover;
 `;
-//포지션은 상하좌우 센터
+
 const Title = styled.h2`
     color: white;
     font-size: 58px;
@@ -98,6 +99,7 @@ const MovieInfo = styled(motion.div)`
     background-color: ${props => props.theme.black.lighter};
     border-radius: 15px;
     overflow:hidden;
+    overflow-y: scroll;
 `;
 const MovieCover = styled.img`
     width: 100%;
@@ -118,6 +120,11 @@ const MovieCoverInfo = styled.p`
     position: relative;
     top: -80px;
     color: white;
+`;
+const BigRate = styled.div`
+  font-size: 15px;
+  font-weight: bold;
+  color: red;
 `;
 
 const rowVariants = {
@@ -164,7 +171,7 @@ function Home() {
     const history = useNavigate();
     const movieMatch:PathMatch<string>|null = useMatch("/movies/:id");
     const {scrollY} = useViewportScroll();
-    const { data, isLoading } = useQuery<GetMoviesResult>(["movies", "nowPlaying"], getMovies);
+    const { data, isLoading } = useQuery<IGetMovieDetail>(["movies", "nowPlaying"], getMovies);
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
     const increaseIndex = () => {
@@ -220,6 +227,7 @@ function Home() {
                                         <MovieCover style={{backgroundImage:`linear-gradient(to top, black, transparent), url(${makeImagePath(clickedMovie.backdrop_path,"w500")})`,}}/>
                                         <MovieTitle>{clickedMovie.title}</MovieTitle>
                                         <MovieCoverInfo>{clickedMovie.overview}</MovieCoverInfo>
+                                        <BigRate>{`⭐️ ${data && data?.vote_average}`}</BigRate>
                                     </>}
                                 </MovieInfo>
                                 </>

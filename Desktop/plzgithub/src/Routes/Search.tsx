@@ -283,7 +283,7 @@ const Search = () => {
                   layoutId={tvMatch.params.id}
                 >
                   {clickedTv && <>
-                    <MovieCover style={{backgroundImage:`linear-gradient(to top, black, transparent), url(${makeImagePath(clickedTv.backdrop_path,"w500")})`,}}/>
+                    <MovieCover style={{backgroundImage:`linear-gradient(to top, black, transparent), url(${makeImagePath(clickedTv.backdrop_path,"w500")})`,}} />
                     <MovieTitle>{clickedTv.title}</MovieTitle>
                     <MovieCoverInfo>{clickedTv.overview}</MovieCoverInfo>
                   </>}
